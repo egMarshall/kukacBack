@@ -21,8 +21,8 @@ export class ChallengeController {
             res.status(200).send({response})
             
         } catch (error) {
-            if (error instanceof Error) {
-                res.status(500).send({message: error.message})
+            if (error instanceof BaseError) {
+                res.status(error.code).send({message: error.message})
             } else {
                 res.status(500).send({message: "Unexpected error!"})
             }
@@ -43,8 +43,8 @@ export class ChallengeController {
             res.status(200).send({response})
             
         } catch (error) {
-            if (error instanceof Error) {
-                res.status(500).send({message: error.message})
+            if (error instanceof BaseError) {
+                res.status(error.code).send({message: error.message})
             } else {
                 res.status(500).send({message: "Unexpected error!"})
             }
@@ -87,8 +87,8 @@ export class ChallengeController {
             res.status(200).send(vehicles)
             
         } catch (error) {
-            if (error instanceof Error) {
-                res.status(500).send({message: error.message})
+            if (error instanceof BaseError) {
+                res.status(error.code).send({message: error.message})
             } else {
                 res.status(500).send({message: "Unexpected error!"})
             }
@@ -105,15 +105,12 @@ export class ChallengeController {
             const challengeBusiness = new ChallengeBusiness()
 
             const response = await challengeBusiness.getCEPs(input)
-
   
              res.status(200).send({response})
             
-
-            
         } catch (error) {
-            if (error instanceof Error) {
-                res.status(500).send({message: error.message})
+            if (error instanceof BaseError) {
+                res.status(error.code).send({message: error.message})
             } else {
                 res.status(500).send({message: "Unexpected error!"})
             }
