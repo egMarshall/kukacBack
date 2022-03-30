@@ -1,28 +1,34 @@
-import { InvalidInputError } from "../error/InvalidInputError";
-import { ExchangeData, ExchangeInputDTO } from "../model/Exchange";
-import { PalindromesInputDTO } from "../model/Palindromes";
+import axios from "axios"
+import { InvalidInputError } from "../error/InvalidInputError"
+import { CEPIsInputDTO } from "../model/CEPs"
+import { ExchangeData, ExchangeInputDTO } from "../model/Exchange"
+import { PalindromesInputDTO } from "../model/Palindromes"
+import { Car, Motorcycle, Vehicle, VehicleInputDTO } from "../model/Vehicle"
+
 
 export class ChallengeBusiness {
 
-  async checkPalindromes(input: PalindromesInputDTO) {
-    let palindromes = new Array()
-    let numLength
-    let numString
+    async checkPalindromes(input: PalindromesInputDTO):Promise<number[]> {
+    
+        let palindromes = new Array()
+        let numLength
+        let numString
 
-        for (let number = input.firstNumber; number <= input.secondNumber; number++) {
-            numString = number.toString()
-            numLength = numString.length
+            for (let number = input.firstNumber; number <= input.secondNumber; number++) {
+                numString = number.toString()
+                numLength = numString.length
 
-            if (numLength > 1) {
-                if (number == parseInt(numString.split('').reverse().join(''))) {
-                    palindromes.push(number)
+                if (numLength > 1) {
+                    if (number == parseInt(numString.split('').reverse().join(''))) {
+                        palindromes.push(number)
+                    }
                 }
             }
-        }
             return palindromes
     }
 
-    async checkExchange(input: ExchangeInputDTO) {
+    async checkExchange(input: ExchangeInputDTO):Promise<ExchangeData> {
+
         let count = new Array()
 
         let value = input.userMoney - input.purchaseValue
@@ -45,5 +51,66 @@ export class ChallengeBusiness {
 
         return response
     }
+
+    async createVehicle(input: VehicleInputDTO):Promise<void> {
+        const fs = require('fs')
+
+        const finished = (err: any) => { 
+            if (err) { 
+              console.log(err); 
+            } 
+        }
+
+        let data = fs.readFileSync('./src/data/vehicles.json')
+        let vehicles: Vehicle[] = JSON.parse(data)
+
+        if (input.doors !== 0) {
+            const vehicle = Car.toCarModel({
+                model: input.model,
+                yearOfManufacture: input.yearOfManufacture,
+                doors: input.doors,
+                brand: input.brand,
+                wheel: input.wheel
+            })
+            let data = JSON.stringify(vehicle, null , 2)
+            fs.appendFile('./src/data/vehicles.json', `\,${data}`, finished)
+
+        } else {
+            const vehicle = Motorcycle.toMotorcycleModel({
+                model: input.model,
+                yearOfManufacture: input.yearOfManufacture,
+                doors: 0,
+                brand: input.brand,
+                wheel: input.wheel,
+            })
+            vehicles.push(vehicle)
+            let data= JSON.stringify(vehicles, null, 2)
+            fs.writeFile('./src/data/vehicles.json',data, finished)
+        }
+    }
+
+    async getAllVehicles() {
+        const fs = require('fs')
+        let data = fs.readFileSync('./src/data/vehicles.json')
+        let vehicles = JSON.parse(data)
+
+        return vehicles
+    }
+
+    async getCEPs(input: CEPIsInputDTO):Promise<Object[]> {
+
+        const requests = []
+
+        if (input.ceps.length !== 5) {
+            throw new InvalidInputError(`There must be 5 CEP's!`)
+        }
+
+        for (let cep of input.ceps) {
+            const address = await axios(`https://viacep.com.br/ws/${cep}/json`)
+            requests.push(address.data)
+        }
+
+       return requests
+    }    
 
 }
