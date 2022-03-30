@@ -14,9 +14,6 @@ export class ChallengeBusiness {
         let numLength
         let numString
 
-        console.log(`firstNumber:`, input.firstNumber)
-        console.log(`secondNumber:`, input.secondNumber)
-
         if (input.firstNumber > input.secondNumber) {
             throw new InvalidInputError(`The second number should be higher than the first one!`)
         }
