@@ -3,6 +3,8 @@ Back-End do Teste Técnico para Trainee Fullstack da Kukac
 
 Foram utilizada as bibliotecas Express, Cors, Knex, Jest, dotenv
 
+## Link para a API: https://teste-kukac-trainee-back.herokuapp.com
+
 # Endpoints e suas instruções de uso
 ## Exercício 1: 
 ### /challenge/palindromos
