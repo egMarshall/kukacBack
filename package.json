@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Back-End do teste técnico da Kukac para Fullstack Trainee",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "test": "clear && echo \"Starting tests...\" && jest",
     "dev": "clear && ts-node-dev src/index.ts",
