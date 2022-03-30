@@ -12,5 +12,26 @@
     "doors": 0,
     "brand": "BMW Motorrad",
     "wheel": 2
+  },
+  {
+    "model": "R 1200 GS",
+    "yearOfManufacture": 2022,
+    "doors": 0,
+    "brand": "BMW Motorrad",
+    "wheel": 2
+  },
+  {
+    "model": "Corolla",
+    "yearOfManufacture": "2022",
+    "doors": "4",
+    "brand": "Toyota",
+    "wheel": "4"
+  },
+  {
+    "model": "Corolla Cross",
+    "yearOfManufacture": "2022",
+    "doors": "4",
+    "brand": "Toyota",
+    "wheel": "4"
   }
 ]

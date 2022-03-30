@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { ChallengeBusiness } from "../business/ChallengeBusiness";
+import { BaseError } from "../error/BaseError";
 import { CEPIsInputDTO } from "../model/CEPs";
 import { ExchangeInputDTO } from "../model/Exchange";
 import { PalindromesInputDTO } from "../model/Palindromes";
@@ -68,8 +69,8 @@ export class ChallengeController {
             res.status(201).send({message: `Vehicle sucessfuly added to the garage!`})
             
         } catch (error) {
-            if (error instanceof Error) {
-                res.status(500).send({message: error.message})
+            if (error instanceof BaseError) {
+                res.status(error.code).send({message: error.message})
             } else {
                 res.status(500).send({message: "Unexpected error!"})
             }

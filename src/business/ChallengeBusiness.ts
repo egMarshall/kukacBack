@@ -4,7 +4,7 @@ import { CEPIsInputDTO } from "../model/CEPs"
 import { ExchangeData, ExchangeInputDTO } from "../model/Exchange"
 import { PalindromesInputDTO } from "../model/Palindromes"
 import { Car, Motorcycle, Vehicle, VehicleInputDTO } from "../model/Vehicle"
-
+import fs from "fs"
 
 export class ChallengeBusiness {
 
@@ -57,7 +57,6 @@ export class ChallengeBusiness {
     }
 
     async createVehicle(input: VehicleInputDTO):Promise<void> {
-        const fs = require('fs')
 
         const finished = (err: any) => { 
             if (err) { 
@@ -69,7 +68,7 @@ export class ChallengeBusiness {
             throw new InvalidInputError(`More than 5 doors is not a valid Car!`)
         }
 
-        let data = fs.readFileSync('./src/data/vehicles.json')
+        let data = fs.readFileSync('./src/data/vehicles.json', "utf8")
         let vehicles: Vehicle[] = JSON.parse(data)
 
         for (let vehicle of vehicles) {
@@ -87,9 +86,9 @@ export class ChallengeBusiness {
                 brand: input.brand,
                 wheel: input.wheel
             })
-            let data = JSON.stringify(vehicle, null , 2)
-            fs.appendFile('./src/data/vehicles.json', `\,${data}`, finished)
-
+            vehicles.push(vehicle)
+            let data= JSON.stringify(vehicles, null, 2)
+            fs.writeFile('./src/data/vehicles.json',data, finished)
         } else {
             const vehicle = Motorcycle.toMotorcycleModel({
                 model: input.model,
@@ -105,8 +104,8 @@ export class ChallengeBusiness {
     }
 
     async getAllVehicles() {
-        const fs = require('fs')
-        let data = fs.readFileSync('./src/data/vehicles.json')
+
+        let data = fs.readFileSync('./src/data/vehicles.json', "utf8")
         let vehicles = JSON.parse(data)
 
         return vehicles
@@ -119,6 +118,8 @@ export class ChallengeBusiness {
         if (input.ceps.length !== 5) {
             throw new InvalidInputError(`There must be 5 CEP's!`)
         }
+
+        
 
         for (let cep of input.ceps) {
             const address = await axios(`https://viacep.com.br/ws/${cep}/json`)

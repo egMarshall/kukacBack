@@ -116,5 +116,4 @@ export class Motorcycle implements Vehicle {
             motorcycle.wheel
         )
     }
-
 }
