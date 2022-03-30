@@ -20,15 +20,15 @@
   },
   "homepage": "https://github.com/egMarshall/kukacBack#readme",
   "devDependencies": {
+  },
+  "dependencies": {
     "@types/cors": "^2.8.12",
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.13",
     "@types/jest": "^27.4.1",
     "@types/knex": "^0.16.1",
     "ts-node-dev": "^1.1.8",
-    "typescript": "^4.6.3"
-  },
-  "dependencies": {
+    "typescript": "^4.6.3",
     "@types/axios": "^0.14.0",
     "axios": "^0.26.1",
     "cors": "^2.8.5",
