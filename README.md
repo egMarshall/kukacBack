@@ -1,4 +1,4 @@
-# kukacBack
+# Teste kukac Fullstack Trainee parte Back-End
 Back-End do Teste Técnico para Trainee Fullstack da Kukac
 
 Foram utilizada as bibliotecas Express, Cors, Knex, Jest, dotenv
