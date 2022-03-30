@@ -4,7 +4,7 @@
   "description": "Back-End do teste técnico da Kukac para Fullstack Trainee",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "clear && echo \"Starting tests...\" && jest",
     "dev": "clear && ts-node-dev src/index.ts",
     "start": "tsc && node build/index.js"
   },

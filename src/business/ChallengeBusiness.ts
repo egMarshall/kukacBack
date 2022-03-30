@@ -14,6 +14,13 @@ export class ChallengeBusiness {
         let numLength
         let numString
 
+        console.log(`firstNumber:`, input.firstNumber)
+        console.log(`secondNumber:`, input.secondNumber)
+
+        if (input.firstNumber > input.secondNumber) {
+            throw new InvalidInputError(`The second number should be higher than the first one!`)
+        }
+
             for (let number = input.firstNumber; number <= input.secondNumber; number++) {
                 numString = number.toString()
                 numLength = numString.length
@@ -61,8 +68,19 @@ export class ChallengeBusiness {
             } 
         }
 
+        if(input.doors > 5) {
+            throw new InvalidInputError(`More than 5 doors is not a valid Car!`)
+        }
+
         let data = fs.readFileSync('./src/data/vehicles.json')
         let vehicles: Vehicle[] = JSON.parse(data)
+
+        for (let vehicle of vehicles) {
+            if (vehicle.model === input.model && 
+                vehicle.yearOfManufacture === input.yearOfManufacture) {
+                    throw new InvalidInputError(`You already have this vehicle in your garage!`)
+            }
+        }
 
         if (input.doors !== 0) {
             const vehicle = Car.toCarModel({
